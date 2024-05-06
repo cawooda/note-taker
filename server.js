@@ -13,12 +13,12 @@ app.use(serverLog);
 
 app.use(express.static('public'));
 
-app.get('/',(req,res) => {
+app.get('*',(req,res) => {
     console.log(path.join(__dirname,'public','notFound.html'))
     //res.sendFile(path.join(__dirname,'public','notFound.html'));
 });
 
 app.listen(PORT,()=>{
-    
+    console.log(`server started at ${dayjs(new Date()).format('DD-MM-YY:HH:MM')} on http://localhost:${PORT}`);
     
 })
