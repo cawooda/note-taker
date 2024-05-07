@@ -8,14 +8,23 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const serverLog = require('./db/serverLog')
+const apiRoute = require('./api/api')
 
+//middlewhere
+app.use(express.static('public'))
 app.use(serverLog);
 
-app.use(express.static('public'));
+//routes
+app.use('/api',apiRoute);
 
-app.get('*',(req,res) => {
-    console.log(path.join(__dirname,'public','notFound.html'))
-    //res.sendFile(path.join(__dirname,'public','notFound.html'));
+
+
+app.get('/', function(req, res){
+    res.redirect('public/index.html');
+});
+
+app.all('*',(req,res) => {
+    res.sendFile(path.join(__dirname,'public','notFound.html'));
 });
 
 app.listen(PORT,()=>{

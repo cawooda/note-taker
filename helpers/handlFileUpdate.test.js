@@ -1,19 +1,35 @@
 
 describe('handleFileUpdate', () => {
-    test('accepts an object and returns a status OK', () => {
+    test('accepts an object and returns a status OK', async () => {
         
         const handlFileUpdate = require('./handlFileUpdate')
         const path = require('path');
         const filePath = path.join(__dirname);
-        
-        console.log("filepath",filePath);
+        const logsTo = 'db';
         const object = {
-            filePath: path.join(__dirname,path.parse(__filename).name,'json'),
-            dbFile: "handleFileUpdate",
-            writeObject: {this:"that",this:"that"}
+            this:"that"
         }
 
+        const result = await handlFileUpdate(filePath,'db',object)
+        expect(result).toBe('status OK');
+    });
 
-        expect(handlFileUpdate(filePath,'handleFileUpdate.test',object)).toBe(true);
+    test('should produce a file containing 1 object', async () => {
+        
+        const handlFileUpdate = require('./handlFileUpdate')
+        const handlFileRead = require('./handleFileRead')
+        const path = require('path');
+        const filePath = path.join(__dirname);
+        const logsTo = '';
+        console.log("filepath",filePath);
+        
+        const object = {
+            this:"that"
+        }
+        
+        const test = await handlFileUpdate(filePath,'db',object)
+        const result = await handlFileRead(filePath,'db');
+        
+        expect(result).toBe('[{this:"that"}]');
     });
   });
