@@ -1,22 +1,24 @@
 const fs = require('fs/promises');
 const path = require('path');
 
+const initLog = {
+    
+}
+
 async function handleFileUpdate (filePath,dbFile,writeObject) {
 
     //creates a path to the file, knowing this function is called from a different location but should always reference from where it is called.
-    // console.log(path.join(filePath,'..',dbFile,`${dbFile}.json`));
-
-    const refPath = path.join(filePath,'..',dbFile,`${dbFile}.json`);
+    const refPath = path.join(filePath,'..','db',`${dbFile}.json`);
+    console.log("refpath",refPath);
+    var fileContents = await fs.readFile(refPath,"utf8");
+    console.log("file contents", fileContents);
+    if (!fileContents) fileContents = "[1,2,3]";
     
-    const fileContents = await fs.readFile(refPath,"utf8", function(err, data) {console.error(err,data)});
-    console.log("read content", fileContents);
+    const fileContentsJSON = JSON.parse(fileContents);
     
-    const fileContentsJSON = await JSON.stringify(fileContents);
-    console.log('read content json',JSON.stringify(fileContentsJSON));
-    
-    const newContents = fileContentsJSON.push(writeObject);
-    
-    await fs.writeFile(refPath,JSON.stringify(newContents));
+    fileContentsJSON.push(writeObject);
+    console.log("new contents",fileContentsJSON);
+    await fs.writeFile(refPath,JSON.stringify(fileContentsJSON));
     return 'status OK';
 }
 
