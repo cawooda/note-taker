@@ -7,7 +7,8 @@ describe('handleFileUpdate', () => {
         const filePath = path.join(__dirname);
         const logsTo = 'db';
         const object = {
-            this:"that"
+            this:"that",
+            that:"this"
         }
 
         const result = await handlFileUpdate(filePath,'db',object)
@@ -31,5 +32,6 @@ describe('handleFileUpdate', () => {
         const result = await handlFileRead(filePath,'db');
         
         expect(result).toBe('[{this:"that"}]');
+        
     });
   });

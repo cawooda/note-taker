@@ -128,13 +128,19 @@ const handleRenderBtns = () => {
 };
 
 // Render the list of note titles
+//this expects a notes argument. 
+//It is parsed to json
+//
 const renderNoteList = async (notes) => {
   let jsonNotes = await notes.json();
+  console.log(jsonNotes);
   if (window.location.pathname === '/notes') {
     noteList.forEach((el) => (el.innerHTML = ''));
   }
+  //notelist is a js query item in the DOM. This seems to clear the notes resetting for rendering
 
   let noteListItems = [];
+  //this readies a noteslist array that is used below once the api call is made.
 
   // Returns HTML element with or without a delete button
   const createLi = (text, delBtn = true) => {
@@ -168,7 +174,7 @@ const renderNoteList = async (notes) => {
   if (jsonNotes.length === 0) {
     noteListItems.push(createLi('No saved Notes', false));
   }
-
+  //this is wehere the parsed json from notes is used to createa a LI for each note. it is expecting a title field.
   jsonNotes.forEach((note) => {
     const li = createLi(note.title);
     li.dataset.note = JSON.stringify(note);
