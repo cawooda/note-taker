@@ -2,7 +2,7 @@
 describe('handleFileUpdate', () => {
     test('accepts an object and returns a status OK', async () => {
         
-        const handlFileUpdate = require('./handlFileUpdate')
+        const handlFileUpdate = require('./handleFileUpdate')
         const path = require('path');
         const filePath = path.join(__dirname);
         const logsTo = 'db';
@@ -17,7 +17,7 @@ describe('handleFileUpdate', () => {
 
     test('should produce a file containing 1 object', async () => {
         
-        const handlFileUpdate = require('./handlFileUpdate')
+        const handlFileUpdate = require('./handleFileUpdate')
         const handlFileRead = require('./handleFileRead')
         const path = require('path');
         const filePath = path.join(__dirname);

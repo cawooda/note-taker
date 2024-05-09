@@ -14,6 +14,7 @@ const apiRoute = require('./api/api')
 //middlewhere
 app.use(express.static('public'))
 app.use(serverLog);
+app.use(express.json());
 
 //routes
 app.use('/api',apiRoute);
