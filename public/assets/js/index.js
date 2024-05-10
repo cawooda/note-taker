@@ -1,3 +1,8 @@
+const idGet = () => {
+  Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+}
 let noteForm;
 let noteTitle;
 let noteText;
@@ -74,6 +79,7 @@ const renderActiveNote = () => {
 
 const handleNoteSave = () => {
   const newNote = {
+    id: idGet(),
     title: noteTitle.value,
     text: noteText.value
   };
@@ -177,6 +183,7 @@ const renderNoteList = async (notes) => {
   }
   //this is wehere the parsed json from notes is used to createa a LI for each note. it is expecting a title field.
   jsonNotes.forEach((note) => {
+    console.log("note in javascript json foreach",note);
     const li = createLi(note.title);
     li.dataset.note = JSON.stringify(note);
 

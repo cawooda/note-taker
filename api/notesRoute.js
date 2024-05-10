@@ -20,12 +20,16 @@ notesRoute.post('/',(req,res)=>{
     //needs to serve a list of notes. This should be an array of objects with a title field in them
     
     const note = req.body;
-    console.log("req", note);
+    //console.log("req", note);
     res.json(handleFileUpdate(__dirname,'db',note));
     
     
     console.log('Post Request notes in api reached');
     
+});
+
+notesRoute.delete('/:id',(req,res)=>{
+
 });
 
 module.exports = notesRoute;

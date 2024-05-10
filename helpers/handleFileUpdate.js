@@ -5,10 +5,11 @@ const initLog = {
     
 }
 
-async function handleFileUpdate (filePath,dbFile,writeObject) {
+async function handleFileUpdate (dbFile,writeObject) {
 
     //creates a path to the file, knowing this function is called from a different location but should always reference from where it is called.
-    const refPath = path.join(filePath,'..','db',`${dbFile}.json`);
+    const refPath = path.join(__dirname,'..','db',`${dbFile}.json`);
+
     console.log("refpath",refPath);
     var fileContents = await fs.readFile(refPath,"utf8");
     console.log("file contents", fileContents);
