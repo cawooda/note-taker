@@ -1,7 +1,9 @@
 const idGet = () => {
-  Math.floor((1 + Math.random()) * 0x10000)
+  const result = Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
       .substring(1);
+  console.log(result);
+  return result;
 }
 let noteForm;
 let noteTitle;
@@ -61,9 +63,10 @@ const deleteNote = (id) =>
 const renderActiveNote = () => {
   hide(saveNoteBtn);
   hide(clearBtn);
-
+  
   if (activeNote.id) {
     show(newNoteBtn);
+    
     noteTitle.setAttribute('readonly', true);
     noteText.setAttribute('readonly', true);
     noteTitle.value = activeNote.title;
@@ -83,7 +86,7 @@ const handleNoteSave = () => {
     title: noteTitle.value,
     text: noteText.value
   };
-  console.log("note recieved from form in front end")
+  console.log("new note",newNote);
   saveNote(newNote).then(() => {
     getAndRenderNotes();
     renderActiveNote();
@@ -111,6 +114,7 @@ const handleNoteDelete = (e) => {
 // Sets the activeNote and displays it
 const handleNoteView = (e) => {
   e.preventDefault();
+  
   activeNote = JSON.parse(e.target.parentElement.getAttribute('data-note'));
   renderActiveNote();
 };
@@ -139,8 +143,9 @@ const handleRenderBtns = () => {
 //It is parsed to json
 //
 const renderNoteList = async (notes) => {
+  console.log("notes",notes);
   let jsonNotes = await notes.json();
-  console.log(jsonNotes);
+  console.log("Jsonnotes",jsonNotes);
   if (window.location.pathname === '/notes') {
     noteList.forEach((el) => (el.innerHTML = ''));
   }

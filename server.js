@@ -8,12 +8,12 @@ const staticOptions = {
 
 const express = require('express');
 const app = express();
-const serverLog = require('./db/serverLog')
+
 const apiRoute = require('./api/api')
 
 //middlewhere
 app.use(express.static('public'))
-app.use(serverLog);
+
 app.use(express.json());
 
 //routes
