@@ -6,21 +6,39 @@ const initLog = {
     
 }
 
-async function handleFileRead () {
-    fileContents = await fs.readFile(FILE,'utf8');
-    return fileContents;
+async function handleGetNotes() {
+    var notes = await fs.readFile(FILE,'utf8');
+    if (!notes) {
+        notes = '[]'
+        fs.writeFile(FILE,notes);
+    };
+    const jsonNotes = await JSON.parse(notes);
+    return jsonNotes;
 }
 
-async function handleAddObject (writeObject) {
-    const fileContents = await handleFileRead();
-    console.log("file contents", fileContents);
-    jsonContents = await JSON.parse(fileContents);
-    jsonContents.push(writeObject);
-    const stringContents = await JSON.stringify(jsonContents);
+
+async function handleFileAdd (writeObject) {
+    const notes = await handleGetNotes();
+    console.log("notes before push",notes);
+    
+    notes.push(writeObject);
+    console.log("notes after push",notes);
+    const stringContents = await JSON.stringify(notes);
+    fs.writeFile(FILE,stringContents);
+}
+
+async function handleFileDelete (id) {
+    
+    const allNotes = await handleGetNotes();
+    const newNotes = allNotes.filter((note)=>(note.id !== id)
+    );
+    
+    const stringContents = await JSON.stringify(newNotes);
     fs.writeFile(FILE,stringContents);
 }
 
 module.exports = {
-    handleAddObject, 
-    handleFileRead
+    handleFileAdd, 
+    handleGetNotes,
+    handleFileDelete
 }
